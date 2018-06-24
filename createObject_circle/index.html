@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>オブジェクトの作成</title>
+  </head>
+  <body>
+    <canvas id="canvas" width="900" height="500"></canvas>
+
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script>
+      'use strict';
+
+      window.addEventListener("load", init);
+
+      function init() {
+        // stage objectを作成
+        const stage = new createjs.Stage("canvas");
+
+        // 円の作成
+        let shape = new createjs.Shape();
+        // 赤色に塗る
+        shape.graphics.beginFill("red");
+        // 半径100pxの円を描画
+        shape.graphics.drawCircle(0, 0, 100);
+        // X座標200pxの位置に移動
+        shape.x = 200;
+        // 透明度を指定
+        shape.alpha = .5;
+        // scale
+        shape.scaleY = .5;
+        // Y座標200pxの位置に移動
+        shape.y = 200;
+        // 描画の終了
+        shape.graphics.endFill();
+        // 表示リストに追加
+        stage.addChild(shape);
+
+        let shape2 = new createjs.Shape();
+        // 線の色を指定
+        shape2.graphics.beginStroke("blue");
+        // 線の太さを指定
+        shape2.graphics.setStrokeStyle(5);
+        // 半径50pxの円を描画
+        shape2.graphics.drawCircle(55, 55, 50);
+        shape2.graphics.endFill();
+        // 表示リストに追加
+        stage.addChild(shape2);
+
+
+        // stageの描画を更新
+        stage.update()
+      }
+    </script>
+  </body>
+  </html>
