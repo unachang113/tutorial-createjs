@@ -26,17 +26,29 @@
 
       function init() {
         // stage objectを作成
-        const stage = new createjs.Stage("canvas");
-        const r = 2;
-        const margin = 30;
-        var windowWidth = window.innerWidth;
-        var windowHeight = window.innerHeight;
+        const target = "canvas",
+              stage = new createjs.Stage(target),
+              r = 2,
+              margin = 30,
+              windowWidth = window.innerWidth,
+              windowHeight = window.innerHeight;
+        stage.canvas.width = windowWidth;
+        stage.canvas.height = windowHeight;
+
+        // retina対応
+        if (window.devicePixelRatio) {
+            const canvas = document.getElementById(target);
+            canvas.width *= devicePixelRatio;
+            canvas.height *= devicePixelRatio;
+            canvas.style.width = String(canvas.width / devicePixelRatio) + "px";
+            canvas.style.height = String(canvas.height / devicePixelRatio) + "px";
+            stage.scaleX = stage.scaleY = window.devicePixelRatio;
+        }
 
         for (var i = 0;i < Math.ceil(windowHeight/(r*2) + margin); i++) {
             for (var j = 0;j < Math.ceil(windowWidth/(r*2) + margin); j++) {
                 // 円の作成
                 let shape = new createjs.Shape();
-                // 赤色に塗る
                 shape.graphics.beginFill("white").drawCircle(0, 0, r);
                 if(i % 2 == 0) {
                     shape.x = margin * j + r;
@@ -51,7 +63,7 @@
         }
 
         // stageの描画を更新
-        stage.update()
+        stage.update();
       }
     </script>
   </body>
