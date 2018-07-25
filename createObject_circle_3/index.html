@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>オブジェクトの作成</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            background: pink;
+        }
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" width="900" height="500"></canvas>
+
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script>
+      'use strict';
+
+      window.addEventListener("load", init);
+
+      function init() {
+        // stage objectを作成
+        const target = "canvas",
+              stage = new createjs.Stage(target),
+              r = 2,
+              margin = 30,
+              windowWidth = window.innerWidth,
+              windowHeight = window.innerHeight;
+        stage.canvas.width = windowWidth;
+        stage.canvas.height = windowHeight;
+
+        // retina対応
+        if (window.devicePixelRatio) {
+            const canvas = document.getElementById(target);
+            canvas.width *= devicePixelRatio;
+            canvas.height *= devicePixelRatio;
+            canvas.style.width = String(canvas.width / devicePixelRatio) + "px";
+            canvas.style.height = String(canvas.height / devicePixelRatio) + "px";
+            stage.scaleX = stage.scaleY = window.devicePixelRatio;
+        }
+
+
+        for (var i = 0;i < Math.ceil(windowHeight/(r*2) + margin); i++) {
+            for (var j = 0;j < Math.ceil(windowWidth/(r*2) + margin); j++) {
+                // 円の作成
+                let shape = new createjs.Shape();
+                shape.graphics.beginFill("white").drawCircle(0, 0, r);
+                if(i % 2 == 0) {
+                    shape.x = margin * j + r;
+                } else {
+                    shape.x = margin * j + r + (margin/2);
+                }
+                shape.y = margin * i + r;
+
+                shape.graphics.endFill();
+                stage.addChild(shape);
+           }
+        }
+
+        // stageの描画を更新
+        stage.update();
+      }
+    </script>
+  </body>
+  </html>
